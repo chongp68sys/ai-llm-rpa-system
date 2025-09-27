@@ -9,13 +9,16 @@
     "lint": "eslint . --ext js,jsx,ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "test:db": "node test-db.js",
+    "test:infrastructure": "node test-infrastructure.js",
     "server": "node src/backend/server.js",
     "server:enhanced": "node src/backend/server-enhanced.js",
+    "start:production": "node start-production.js",
     "dev:all": "concurrently \"npm run server:enhanced\" \"npm run dev\"",
-    "dev:production": "concurrently \"npm run server:enhanced\" \"npm run dev\"",
+    "dev:production": "concurrently \"npm run start:production\" \"npm run dev\"",
     "docker:up": "docker-compose up -d postgres redis",
     "docker:down": "docker-compose down",
-    "docker:logs": "docker-compose logs -f"
+    "docker:logs": "docker-compose logs -f",
+    "production:full": "npm run docker:up && sleep 3 && npm run start:production"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.64.0",
