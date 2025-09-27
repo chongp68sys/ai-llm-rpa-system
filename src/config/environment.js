@@ -1,120 +1,23 @@
-interface EnvironmentConfig {
-  // Database
-  database: {
-    url: string;
-    host: string;
-    port: number;
-    name: string;
-    user: string;
-    password: string;
-    ssl: boolean;
-    maxConnections?: number;
-  };
-
-  // Redis
-  redis: {
-    url: string;
-    host: string;
-    port: number;
-    password?: string;
-  };
-
-  // Email Services
-  email: {
-    provider: 'smtp' | 'sendgrid' | 'ses';
-    smtp?: {
-      host: string;
-      port: number;
-      user: string;
-      pass: string;
-      secure: boolean;
-    };
-    sendgrid?: {
-      apiKey: string;
-      fromEmail: string;
-    };
-    ses?: {
-      region: string;
-      accessKeyId: string;
-      secretAccessKey: string;
-      fromEmail: string;
-    };
-  };
-
-  // SMS Services
-  sms: {
-    provider: 'twilio' | 'sns';
-    twilio?: {
-      accountSid: string;
-      authToken: string;
-      fromPhone: string;
-    };
-    sns?: {
-      region: string;
-      accessKeyId: string;
-      secretAccessKey: string;
-    };
-  };
-
-  // Chat Services
-  chat: {
-    slack?: {
-      botToken?: string;
-      webhookUrl?: string;
-    };
-    discord?: {
-      botToken: string;
-    };
-    teams?: {
-      webhookUrl: string;
-    };
-  };
-
-  // LLM Services
-  llm: {
-    openai?: {
-      apiKey: string;
-    };
-    anthropic?: {
-      apiKey: string;
-    };
-  };
-
-  // General
-  general: {
-    nodeEnv: 'development' | 'production' | 'test';
-    port: number;
-    logLevel: 'debug' | 'info' | 'warn' | 'error';
-  };
-
-  // Security
-  security: {
-    jwtSecret: string;
-    encryptionKey: string;
-    webhookSecret: string;
-  };
-}
-
 // Environment variable parsing with defaults
-const parseEnvBoolean = (value: string | undefined, defaultValue: boolean = false): boolean => {
+const parseEnvBoolean = (value, defaultValue = false) => {
   if (!value) return defaultValue;
   return value.toLowerCase() === 'true';
 };
 
-const parseEnvNumber = (value: string | undefined, defaultValue: number): number => {
+const parseEnvNumber = (value, defaultValue) => {
   if (!value) return defaultValue;
   const parsed = parseInt(value, 10);
   return isNaN(parsed) ? defaultValue : parsed;
 };
 
 // Load configuration from environment variables
-export const config: EnvironmentConfig = {
+export const config = {
   database: {
     url: process.env.DATABASE_URL || 'postgresql://localhost:5432/ai_llm_rpa_system',
     host: process.env.DATABASE_HOST || 'localhost',
     port: parseEnvNumber(process.env.DATABASE_PORT, 5432),
     name: process.env.DATABASE_NAME || 'ai_llm_rpa_system',
-    user: process.env.DATABASE_USER || 'postgres',
+    user: process.env.DATABASE_USER || 'paul',
     password: process.env.DATABASE_PASSWORD || '',
     ssl: parseEnvBoolean(process.env.DATABASE_SSL, false),
     maxConnections: parseEnvNumber(process.env.DATABASE_MAX_CONNECTIONS, 20)
@@ -128,7 +31,7 @@ export const config: EnvironmentConfig = {
   },
 
   email: {
-    provider: (process.env.EMAIL_PROVIDER as any) || 'smtp',
+    provider: (process.env.EMAIL_PROVIDER) || 'smtp',
     smtp: {
       host: process.env.SMTP_HOST || '',
       port: parseEnvNumber(process.env.SMTP_PORT, 587),
@@ -149,7 +52,7 @@ export const config: EnvironmentConfig = {
   },
 
   sms: {
-    provider: (process.env.SMS_PROVIDER as any) || 'twilio',
+    provider: (process.env.SMS_PROVIDER) || 'twilio',
     twilio: {
       accountSid: process.env.TWILIO_ACCOUNT_SID || '',
       authToken: process.env.TWILIO_AUTH_TOKEN || '',
@@ -185,9 +88,9 @@ export const config: EnvironmentConfig = {
   },
 
   general: {
-    nodeEnv: (process.env.NODE_ENV as any) || 'development',
+    nodeEnv: (process.env.NODE_ENV) || 'development',
     port: parseEnvNumber(process.env.PORT, 3001),
-    logLevel: (process.env.LOG_LEVEL as any) || 'info'
+    logLevel: (process.env.LOG_LEVEL) || 'info'
   },
 
   security: {
@@ -198,8 +101,8 @@ export const config: EnvironmentConfig = {
 };
 
 // Validation functions
-export const validateConfig = (): { isValid: boolean; errors: string[] } => {
-  const errors: string[] = [];
+export const validateConfig = () => {
+  const errors = [];
 
   // Email validation
   if (config.email.provider === 'smtp') {

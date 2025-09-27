@@ -1,0 +1,100 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: ai-llm-rpa-postgres
+    environment:
+      POSTGRES_DB: ai_llm_rpa_system
+      POSTGRES_USER: paul
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD:-dev-password}
+      POSTGRES_HOST_AUTH_METHOD: ${POSTGRES_HOST_AUTH_METHOD:-md5}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./src/database/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql
+      - ./setup-db.sql:/docker-entrypoint-initdb.d/02-setup.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U paul -d ai_llm_rpa_system"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - ai-llm-network
+
+  # Redis for Queue Management
+  redis:
+    image: redis:7-alpine
+    container_name: ai-llm-rpa-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - ai-llm-network
+
+  # Application Backend (when ready for containerization)
+  # Uncomment and configure when you want to containerize the backend
+  # backend:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile.backend
+  #   container_name: ai-llm-rpa-backend
+  #   environment:
+  #     - NODE_ENV=development
+  #     - DATABASE_HOST=postgres
+  #     - DATABASE_PORT=5432
+  #     - DATABASE_NAME=ai_llm_rpa_system
+  #     - DATABASE_USER=paul
+  #     - DATABASE_PASSWORD=${DATABASE_PASSWORD:-dev-password}
+  #     - REDIS_URL=redis://redis:6379
+  #   ports:
+  #     - "3001:3001"
+  #   depends_on:
+  #     postgres:
+  #       condition: service_healthy
+  #     redis:
+  #       condition: service_healthy
+  #   volumes:
+  #     - ./src:/app/src
+  #     - ./package.json:/app/package.json
+  #     - ./package-lock.json:/app/package-lock.json
+  #   networks:
+  #     - ai-llm-network
+
+  # Frontend (when ready for containerization)
+  # frontend:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile.frontend
+  #   container_name: ai-llm-rpa-frontend
+  #   environment:
+  #     - VITE_API_URL=http://localhost:3001
+  #   ports:
+  #     - "5173:5173"
+  #   volumes:
+  #     - ./src:/app/src
+  #     - ./index.html:/app/index.html
+  #     - ./vite.config.ts:/app/vite.config.ts
+  #   networks:
+  #     - ai-llm-network
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+
+networks:
+  ai-llm-network:
+    driver: bridge

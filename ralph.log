@@ -1,0 +1,16 @@
+[0;34m[2025-09-27 16:05:01][0m 🚀 Starting Ralph with Claude Code + GitHub Integration
+[0;34m[2025-09-27 16:05:01][0m Configuration: MAX_ITERATIONS=50, DELAY=2
+[0;34m[2025-09-27 16:05:01][0m 🔍 Checking Ralph setup...
+[0;34m[2025-09-27 16:05:01][0m 🔍 Checking GitHub setup...
+[0;35m[2025-09-27 16:05:01] GITHUB:[0m Connected to: https://github.com/chongp68sys/ai-llm-rpa-system.git
+[0;35m[2025-09-27 16:05:01] GITHUB:[0m GitHub CLI detected - enhanced features available
+[1;33m[2025-09-27 16:05:01] WARNING:[0m AGENT.md not found. Creating template...
+[0;32m[2025-09-27 16:05:01] SUCCESS:[0m Created AGENT.md template with GitHub integration
+[0;32m[2025-09-27 16:05:01] SUCCESS:[0m Setup check complete
+[0;34m[2025-09-27 16:05:01][0m Ralph is ready. Press Ctrl+C to stop.
+[0;34m[2025-09-27 16:05:01][0m Monitor progress: tail -f ralph.log
+[0;34m[2025-09-27 16:05:01][0m Check status anytime: ./ralph.sh --status
+[0;34m[2025-09-27 16:05:01][0m 🤖 Ralph iteration 1/50
+[0;34m[2025-09-27 16:05:01][0m 📝 Executing Claude Code...
+[0;32m[2025-09-27 16:22:48] SUCCESS:[0m Claude Code execution completed
+[0;34m[2025-09-27 16:22:48][0m 📦 Committing changes...
