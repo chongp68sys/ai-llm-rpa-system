@@ -39,3 +39,33 @@ PostgreSQL database initialized successfully
    ✅ Security Headers
 
 🚀 Ready for production workloads!
+🚀 Processing workflow execution job: 9
+✅ Workflow execution test-execution-id completed successfully
+✅ Job 9 in queue workflow-execution completed
+
+🔄 Received SIGTERM, shutting down gracefully...
+🔄 Shutting down WebSocket server...
+✅ WebSocket server closed
+✅ WebSocket server closed
+🔄 Shutting down queue manager...
+Closing worker for workflow-execution
+Closing worker for email-sending
+Closing worker for webhook-processing
+Closing worker for file-processing
+Closing worker for llm-processing
+Closing queue events for workflow-execution
+Closing queue events for email-sending
+Closing queue events for webhook-processing
+Closing queue events for file-processing
+Closing queue events for llm-processing
+Closing queue workflow-execution
+Closing queue email-sending
+Closing queue webhook-processing
+Closing queue file-processing
+Closing queue llm-processing
+✅ Queue manager shut down successfully
+✅ Queue manager closed
+Database pool closed
+✅ Database closed
+✅ HTTP server closed
+👋 Goodbye!
