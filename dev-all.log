@@ -1,0 +1,59 @@
+
+> ai-llm-rpa-system@0.0.1 dev:all
+> concurrently "npm run server:enhanced" "npm run dev"
+
+[1] 
+[1] > ai-llm-rpa-system@0.0.1 dev
+[1] > vite
+[1] 
+[0] 
+[0] > ai-llm-rpa-system@0.0.1 server:enhanced
+[0] > node src/backend/server-enhanced.js
+[0] 
+[0] [dotenv@17.2.2] injecting env (18) from .env -- tip: ⚙️  suppress all logs with { quiet: true }
+[0] 🚀 Initializing AI LLM RPA System...
+[0] ⚠️ Configuration warnings: [
+[0]   'SMTP_HOST is required when using SMTP provider',
+[0]   'SMTP_USER is required when using SMTP provider',
+[0]   'SMTP_PASS is required when using SMTP provider',
+[0]   'TWILIO_ACCOUNT_SID is required when using Twilio provider',
+[0]   'TWILIO_AUTH_TOKEN is required when using Twilio provider',
+[0]   'TWILIO_FROM_PHONE is required when using Twilio provider'
+[0] ]
+[0] 📊 Initializing database...
+[0] 💾 Database schema already initialized
+[0] PostgreSQL database initialized successfully
+[0] ✅ Database initialized
+[0] 🚀 Initializing queue system...
+[0] ✅ All queue workers created successfully
+[0] ✅ Queue manager initialized successfully
+[0] ✅ Queue system initialized
+[0] 🔌 Initializing WebSocket server...
+[0] ✅ WebSocket server initialized
+[0] 🎉 All systems initialized successfully!
+[0] 🎉 AI LLM RPA System Started Successfully!
+[0] 
+[0] 📊 Server Information:
+[0]    🌐 HTTP Server: http://localhost:3001
+[0]    🔌 WebSocket Server: ws://localhost:3001/ws
+[0]    🏥 Health Check: http://localhost:3001/api/health
+[0] 
+[0] 🔐 Authentication:
+[0]    📝 Register: POST http://localhost:3001/api/auth/register
+[0]    🔑 Login: POST http://localhost:3001/api/auth/login
+[0] 
+[0] ⚙️ System Features:
+[0]    ✅ PostgreSQL Database with Connection Pool
+[0]    ✅ Redis Queue System (BullMQ)
+[0]    ✅ JWT Authentication
+[0]    ✅ Real-time WebSocket Updates
+[0]    ✅ Rate Limiting & Security Headers
+[0]    ✅ Graceful Shutdown Handling
+[0] 
+[0] 🚀 Ready to process workflows!
+[1] 
+[1]   VITE v5.4.20  ready in 144 ms
+[1] 
+[1]   ➜  Local:   http://localhost:3000/
+[1]   ➜  Network: use --host to expose
+[1] 6:55:51 PM [vite] page reload docker-compose.yml
