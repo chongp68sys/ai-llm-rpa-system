@@ -67,19 +67,24 @@ async function testDatabaseConnection() {
     }
     console.log('');
 
-    // 5. Create schema if needed
-    console.log('5. Setting up database schema...');
-    const schemaPath = join(__dirname, 'src', 'database', 'schema.sql');
-    
-    try {
-      const schema = readFileSync(schemaPath, 'utf-8');
-      await pool.query('BEGIN');
-      await pool.query(schema);
-      await pool.query('COMMIT');
-      console.log('✅ Schema created/updated successfully\n');
-    } catch (schemaError) {
-      await pool.query('ROLLBACK');
-      throw schemaError;
+    // 5. Skip schema setup if tables already exist
+    if (tables.rows.length > 0) {
+      console.log('5. Schema already exists - skipping setup...');
+      console.log('✅ Database ready\n');
+    } else {
+      console.log('5. Setting up database schema...');
+      const schemaPath = join(__dirname, 'src', 'database', 'schema.sql');
+      
+      try {
+        const schema = readFileSync(schemaPath, 'utf-8');
+        await pool.query('BEGIN');
+        await pool.query(schema);
+        await pool.query('COMMIT');
+        console.log('✅ Schema created/updated successfully\n');
+      } catch (schemaError) {
+        await pool.query('ROLLBACK');
+        throw schemaError;
+      }
     }
 
     // 6. Verify tables were created
