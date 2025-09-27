@@ -3,6 +3,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import { createServer } from 'http';
+import { randomUUID } from 'crypto';
 import { config } from 'dotenv';
 
 // Load environment variables
@@ -251,6 +252,127 @@ const workflowRouter = express.Router();
 // Apply authentication to all workflow routes
 workflowRouter.use(authService.createAuthMiddleware());
 
+// Get all workflows
+workflowRouter.get('/workflows', async (req, res) => {
+  try {
+    const result = await dbManager.query(`
+      SELECT id, name, description, status, created_at, updated_at
+      FROM workflows
+      WHERE created_by = $1 OR $2 = 'admin'
+      ORDER BY updated_at DESC
+    `, [req.auth.userId, req.auth.role]);
+    
+    res.json({
+      success: true,
+      workflows: result.rows
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: error.message
+    });
+  }
+});
+
+// Get workflow by ID
+workflowRouter.get('/workflows/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await dbManager.query(`
+      SELECT * FROM workflows 
+      WHERE id = $1 AND (created_by = $2 OR $3 = 'admin')
+    `, [id, req.auth.userId, req.auth.role]);
+    
+    if (result.rows.length === 0) {
+      return res.status(404).json({
+        success: false,
+        error: 'Workflow not found'
+      });
+    }
+    
+    res.json({
+      success: true,
+      workflow: result.rows[0]
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: error.message
+    });
+  }
+});
+
+// Save/Create workflow
+workflowRouter.post('/workflows', async (req, res) => {
+  try {
+    const { name, description, nodes, edges } = req.body;
+    
+    const result = await dbManager.query(`
+      INSERT INTO workflows (name, description, nodes_data, edges_data, status, created_by)
+      VALUES ($1, $2, $3, $4, $5, $6)
+      RETURNING id, name, created_at
+    `, [
+      name || 'Untitled Workflow',
+      description || 'Workflow created via API',
+      JSON.stringify(nodes || []),
+      JSON.stringify(edges || []),
+      'active',
+      req.auth.userId
+    ]);
+    
+    res.json({
+      success: true,
+      workflow: result.rows[0]
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: error.message
+    });
+  }
+});
+
+// Update workflow
+workflowRouter.put('/workflows/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, description, nodes, edges, status } = req.body;
+    
+    const result = await dbManager.query(`
+      UPDATE workflows 
+      SET name = $1, description = $2, nodes_data = $3, edges_data = $4, status = $5, updated_at = CURRENT_TIMESTAMP
+      WHERE id = $6 AND (created_by = $7 OR $8 = 'admin')
+      RETURNING id, name, updated_at
+    `, [
+      name,
+      description,
+      JSON.stringify(nodes || []),
+      JSON.stringify(edges || []),
+      status || 'active',
+      id,
+      req.auth.userId,
+      req.auth.role
+    ]);
+    
+    if (result.rows.length === 0) {
+      return res.status(404).json({
+        success: false,
+        error: 'Workflow not found or not authorized'
+      });
+    }
+    
+    res.json({
+      success: true,
+      workflow: result.rows[0]
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: error.message
+    });
+  }
+});
+
 // Enhanced workflow execution with queue
 workflowRouter.post('/workflows/:id/execute', async (req, res) => {
   try {
@@ -266,13 +388,14 @@ workflowRouter.post('/workflows/:id/execute', async (req, res) => {
       });
     }
 
-    // Create execution context
-    const executionContext = new ExecutionContext();
-    await executionContext.initialize(id, null, {
-      userId: req.auth.userId,
-      triggeredBy: 'manual',
-      triggerData
-    });
+    // Create execution context with proper constructor
+    const executionId = randomUUID();
+    const executionContext = new ExecutionContext(id, executionId);
+    
+    // Set initial variables
+    executionContext.setVariable('userId', req.auth.userId);
+    executionContext.setVariable('triggeredBy', 'manual');
+    executionContext.setVariable('triggerData', triggerData);
 
     // Add to queue instead of executing directly
     const job = await queueManager.addWorkflowExecution(
