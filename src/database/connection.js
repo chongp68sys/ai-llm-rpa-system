@@ -99,9 +99,20 @@ class DatabaseManager {
 
   async close() {
     if (this.pool) {
-      await this.pool.end();
-      this.pool = null;
-      console.log('Database pool closed');
+      try {
+        await this.pool.end();
+        this.pool = null;
+        console.log('Database pool closed');
+      } catch (error) {
+        if (error.message.includes('Called end on pool more than once')) {
+          console.log('Database pool already closed');
+        } else {
+          console.error('Error closing database pool:', error.message);
+        }
+        this.pool = null;
+      }
+    } else {
+      console.log('Database pool already closed');
     }
   }
 

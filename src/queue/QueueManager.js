@@ -351,28 +351,67 @@ class QueueManager {
 
   // Graceful shutdown
   async close() {
+    if (!this.isInitialized) {
+      console.log('Queue manager already shut down');
+      return;
+    }
+
     console.log('🔄 Shutting down queue manager...');
     
-    // Close all workers
-    for (const [queueName, worker] of this.workers) {
-      console.log(`Closing worker for ${queueName}`);
-      await worker.close();
+    try {
+      // Close all workers with timeout protection
+      const workerClosePromises = Array.from(this.workers.entries()).map(async ([queueName, worker]) => {
+        console.log(`Closing worker for ${queueName}`);
+        try {
+          await Promise.race([
+            worker.close(),
+            new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), 5000))
+          ]);
+        } catch (error) {
+          console.warn(`Warning: Failed to close worker ${queueName}:`, error.message);
+        }
+      });
+      await Promise.allSettled(workerClosePromises);
+      
+      // Close all queue events with timeout protection
+      const queueEventsClosePromises = Array.from(this.queueEvents.entries()).map(async ([queueName, queueEvents]) => {
+        console.log(`Closing queue events for ${queueName}`);
+        try {
+          await Promise.race([
+            queueEvents.close(),
+            new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), 5000))
+          ]);
+        } catch (error) {
+          console.warn(`Warning: Failed to close queue events ${queueName}:`, error.message);
+        }
+      });
+      await Promise.allSettled(queueEventsClosePromises);
+      
+      // Close all queues with timeout protection
+      const queueClosePromises = Array.from(this.queues.entries()).map(async ([queueName, queue]) => {
+        console.log(`Closing queue ${queueName}`);
+        try {
+          await Promise.race([
+            queue.close(),
+            new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), 5000))
+          ]);
+        } catch (error) {
+          console.warn(`Warning: Failed to close queue ${queueName}:`, error.message);
+        }
+      });
+      await Promise.allSettled(queueClosePromises);
+      
+      // Clear maps
+      this.workers.clear();
+      this.queueEvents.clear();
+      this.queues.clear();
+      
+      this.isInitialized = false;
+      console.log('✅ Queue manager shut down successfully');
+    } catch (error) {
+      console.error('Error during queue manager shutdown:', error);
+      this.isInitialized = false;
     }
-    
-    // Close all queue events
-    for (const [queueName, queueEvents] of this.queueEvents) {
-      console.log(`Closing queue events for ${queueName}`);
-      await queueEvents.close();
-    }
-    
-    // Close all queues
-    for (const [queueName, queue] of this.queues) {
-      console.log(`Closing queue ${queueName}`);
-      await queue.close();
-    }
-    
-    this.isInitialized = false;
-    console.log('✅ Queue manager shut down successfully');
   }
 }
 

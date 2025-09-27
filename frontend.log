@@ -3,8 +3,9 @@
 > vite
 
 Port 3000 is in use, trying another one...
+Port 3001 is in use, trying another one...
 
-  VITE v5.4.20  ready in 133 ms
+  VITE v5.4.20  ready in 208 ms
 
-  ➜  Local:   http://localhost:3001/
+  ➜  Local:   http://localhost:3002/
   ➜  Network: use --host to expose

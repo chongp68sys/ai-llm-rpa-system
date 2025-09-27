@@ -467,33 +467,46 @@ workflowRouter.get('/executions/:id', async (req, res) => {
 // Mount workflow router
 app.use('/api', workflowRouter);
 
+// Shutdown flag to prevent multiple shutdowns
+let isShuttingDown = false;
+
 // Graceful shutdown handling
 async function gracefulShutdown(signal) {
+  if (isShuttingDown) {
+    console.log(`Already shutting down, ignoring ${signal}`);
+    return;
+  }
+  
+  isShuttingDown = true;
   console.log(`🔄 Received ${signal}, starting graceful shutdown...`);
   
   try {
     // Close WebSocket server
     if (wsServer) {
+      console.log('🔄 Shutting down WebSocket server...');
       await wsServer.close();
     }
 
     // Close queue system
+    console.log('🔄 Shutting down queue manager...');
     await queueManager.close();
 
     // Close database connections
+    console.log('🔄 Shutting down database connections...');
     await dbManager.close();
 
     // Close HTTP server
+    console.log('🔄 Shutting down HTTP server...');
     server.close(() => {
       console.log('✅ Graceful shutdown completed');
       process.exit(0);
     });
 
-    // Force exit after 10 seconds
+    // Force exit after 15 seconds
     setTimeout(() => {
       console.error('❌ Forced shutdown due to timeout');
       process.exit(1);
-    }, 10000);
+    }, 15000);
 
   } catch (error) {
     console.error('❌ Error during shutdown:', error);
