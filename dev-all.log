@@ -57,3 +57,5 @@
 [1]   ➜  Local:   http://localhost:3000/
 [1]   ➜  Network: use --host to expose
 [1] 6:55:51 PM [vite] page reload docker-compose.yml
+[0] ✅ Job 21 in queue workflow-execution completed
+[0] npm run server:enhanced exited with code SIGKILL
