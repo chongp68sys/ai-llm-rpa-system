@@ -1,0 +1,206 @@
+@import 'tailwindcss';
+
+/* Glass theme base */
+body {
+  background: 
+    linear-gradient(135deg, rgba(0,0,0,0.4), rgba(0,0,0,0.2)),
+    url('/factory-background.jpg') no-repeat center center fixed,
+    linear-gradient(135deg, #1a237e 0%, #283593 25%, #3f51b5 50%, #5c6bc0 75%, #7986cb 100%);
+  background-size: cover, cover, cover;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Dark overlay for better glass effect visibility */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: -1;
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+}
+
+.glass-panel {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+}
+
+.glass-button {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 16px 0 rgba(31, 38, 135, 0.25);
+  transition: all 0.3s ease;
+}
+
+.glass-button:hover {
+  background: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 6px 24px 0 rgba(31, 38, 135, 0.35);
+  transform: translateY(-1px);
+}
+
+/* React Flow styles */
+.react-flow__node {
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+.react-flow__edge-path {
+  stroke: #6366f1;
+  stroke-width: 2;
+}
+
+.react-flow__edge.selected .react-flow__edge-path {
+  stroke: #4f46e5;
+  stroke-width: 3;
+}
+
+.react-flow__handle {
+  width: 8px;
+  height: 8px;
+  background: #6366f1;
+  border: 2px solid #ffffff;
+  top: 50% !important;
+  transform: translateY(-50%);
+}
+
+.react-flow__handle-connecting {
+  background: #10b981;
+}
+
+.react-flow__handle-valid {
+  background: #10b981;
+}
+
+/* Custom node styles */
+.workflow-node {
+  min-width: 180px;
+  width: 200px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  transition: all 0.3s ease;
+}
+
+.workflow-node:hover {
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.45);
+  transform: translateY(-2px);
+}
+
+.workflow-node.selected {
+  border-color: rgba(99, 102, 241, 0.8);
+  box-shadow: 0 12px 40px 0 rgba(99, 102, 241, 0.4);
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.workflow-node.executing {
+  border-color: rgba(16, 185, 129, 0.8);
+  box-shadow: 0 12px 40px 0 rgba(16, 185, 129, 0.4);
+  background: rgba(255, 255, 255, 0.3);
+  animation: pulse-glass 2s infinite;
+}
+
+@keyframes pulse-glass {
+  0%, 100% {
+    box-shadow: 0 12px 40px 0 rgba(16, 185, 129, 0.4);
+    background: rgba(255, 255, 255, 0.3);
+  }
+  50% {
+    box-shadow: 0 16px 50px 0 rgba(16, 185, 129, 0.6);
+    background: rgba(255, 255, 255, 0.35);
+  }
+}
+
+/* Node header styles */
+.node-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  border-top-left-radius: 14px;
+  border-top-right-radius: 14px;
+  color: white;
+  font-weight: 500;
+  font-size: 14px;
+  background: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.node-content {
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border-bottom-left-radius: 14px;
+  border-bottom-right-radius: 14px;
+}
+
+/* Node type colors with glass effect */
+.node-trigger { 
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.8), rgba(59, 130, 246, 0.6)); 
+  border-bottom: 1px solid rgba(59, 130, 246, 0.3);
+}
+.node-action { 
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.8), rgba(139, 92, 246, 0.6)); 
+  border-bottom: 1px solid rgba(139, 92, 246, 0.3);
+}
+.node-condition { 
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.8), rgba(245, 158, 11, 0.6)); 
+  border-bottom: 1px solid rgba(245, 158, 11, 0.3);
+}
+.node-transform { 
+  background: linear-gradient(135deg, rgba(6, 182, 212, 0.8), rgba(6, 182, 212, 0.6)); 
+  border-bottom: 1px solid rgba(6, 182, 212, 0.3);
+}
+
+/* ETL Node categories */
+.node-ingestion { 
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.8), rgba(99, 102, 241, 0.6)); 
+  border-bottom: 1px solid rgba(99, 102, 241, 0.3);
+}
+.node-ai { 
+  background: linear-gradient(135deg, rgba(236, 72, 153, 0.8), rgba(236, 72, 153, 0.6)); 
+  border-bottom: 1px solid rgba(236, 72, 153, 0.3);
+}
+.node-validation { 
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.8), rgba(245, 158, 11, 0.6)); 
+  border-bottom: 1px solid rgba(245, 158, 11, 0.3);
+}
+.node-client-mgmt { 
+  background: linear-gradient(135deg, rgba(107, 114, 128, 0.8), rgba(107, 114, 128, 0.6)); 
+  border-bottom: 1px solid rgba(107, 114, 128, 0.3);
+}
+
+/* Loading spinner */
+.loading-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid #f3f4f6;
+  border-top: 2px solid #6366f1;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
