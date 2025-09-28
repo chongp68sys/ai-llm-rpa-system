@@ -30,7 +30,7 @@ async function testWebSocket() {
 
     // Connect to WebSocket with token
     console.log('2. Connecting to WebSocket...');
-    const ws = new WebSocket(`ws://localhost:3001/ws?token=${token}`);
+    const ws = new WebSocket(`ws://localhost:3002/ws?token=${token}`);
 
     ws.on('open', function open() {
       console.log('✅ WebSocket connected successfully!\n');
