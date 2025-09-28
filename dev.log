@@ -1,0 +1,251 @@
+
+> ai-llm-rpa-system@0.0.1 dev:all
+> concurrently "npm run server:enhanced" "npm run dev"
+
+[0] 
+[0] > ai-llm-rpa-system@0.0.1 server:enhanced
+[0] > node src/backend/server-enhanced.js
+[0] 
+[1] 
+[1] > ai-llm-rpa-system@0.0.1 dev
+[1] > vite
+[1] 
+[0] [dotenv@17.2.2] injecting env (17) from .env -- tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`
+[0] 🚀 Initializing AI LLM RPA System...
+[0] ⚠️ Configuration warnings: [
+[0]   'SMTP_HOST is required when using SMTP provider',
+[0]   'SMTP_USER is required when using SMTP provider',
+[0]   'SMTP_PASS is required when using SMTP provider',
+[0]   'TWILIO_ACCOUNT_SID is required when using Twilio provider',
+[0]   'TWILIO_AUTH_TOKEN is required when using Twilio provider',
+[0]   'TWILIO_FROM_PHONE is required when using Twilio provider'
+[0] ]
+[0] 📊 Initializing database...
+[1] Port 5173 is in use, trying another one...
+[1] Port 5174 is in use, trying another one...
+[1] Port 5175 is in use, trying another one...
+[1] 
+[1]   VITE v5.4.20  ready in 149 ms
+[1] 
+[1]   ➜  Local:   http://localhost:5176/
+[1]   ➜  Network: use --host to expose
+[0] 💾 Database schema already initialized
+[0] PostgreSQL database initialized successfully
+[0] ✅ Database initialized
+[0] 🚀 Initializing queue system...
+[0] ✅ All queue workers created successfully
+[0] ✅ Queue manager initialized successfully
+[0] ✅ Queue system initialized
+[0] 🔌 Initializing WebSocket server...
+[0] ✅ WebSocket server initialized
+[0] 🎉 All systems initialized successfully!
+[0] ❌ Uncaught Exception: Error: listen EADDRINUSE: address already in use :::3001
+[0]     at Server.setupListenHandle [as _listen2] (node:net:1939:16)
+[0]     at listenInCluster (node:net:1996:12)
+[0]     at Server.listen (node:net:2101:7)
+[0]     at startServer (file:///Users/paul/development/ai-llm-rpa-system/src/backend/server-enhanced.js:537:12)
+[0]     at process.processTicksAndRejections (node:internal/process/task_queues:105:5) {
+[0]   code: 'EADDRINUSE',
+[0]   errno: -48,
+[0]   syscall: 'listen',
+[0]   address: '::',
+[0]   port: 3001
+[0] }
+[0] 🔄 Received uncaughtException, starting graceful shutdown...
+[0] 🔄 Shutting down WebSocket server...
+[0] 🔄 Shutting down WebSocket server...
+[0] ✅ WebSocket server closed
+[0] 🔄 Shutting down queue manager...
+[0] 🔄 Shutting down queue manager...
+[0] Closing worker for workflow-execution
+[0] Closing worker for email-sending
+[0] Closing worker for webhook-processing
+[0] Closing worker for file-processing
+[0] Closing worker for llm-processing
+[0] Closing queue events for workflow-execution
+[0] Closing queue events for email-sending
+[0] Closing queue events for webhook-processing
+[0] Closing queue events for file-processing
+[0] Closing queue events for llm-processing
+[0] ❌ Unhandled Rejection at: Promise {
+[0]   <rejected> Error: Connection is closed.
+[0]       at close (/Users/paul/development/ai-llm-rpa-system/node_modules/ioredis/built/redis/event_handler.js:189:25)
+[0]       at Socket.<anonymous> (/Users/paul/development/ai-llm-rpa-system/node_modules/ioredis/built/redis/event_handler.js:156:20)
+[0]       at Object.onceWrapper (node:events:622:26)
+[0]       at Socket.emit (node:events:519:35)
+[0]       at TCP.<anonymous> (node:net:351:12)
+[0] } reason: Error: Connection is closed.
+[0]     at close (/Users/paul/development/ai-llm-rpa-system/node_modules/ioredis/built/redis/event_handler.js:189:25)
+[0]     at Socket.<anonymous> (/Users/paul/development/ai-llm-rpa-system/node_modules/ioredis/built/redis/event_handler.js:156:20)
+[0]     at Object.onceWrapper (node:events:622:26)
+[0]     at Socket.emit (node:events:519:35)
+[0]     at TCP.<anonymous> (node:net:351:12)
+[0] Already shutting down, ignoring unhandledRejection
+[0] Error: Connection is closed.
+[0]     at close (/Users/paul/development/ai-llm-rpa-system/node_modules/ioredis/built/redis/event_handler.js:189:25)
+[0]     at Socket.<anonymous> (/Users/paul/development/ai-llm-rpa-system/node_modules/ioredis/built/redis/event_handler.js:156:20)
+[0]     at Object.onceWrapper (node:events:622:26)
+[0]     at Socket.emit (node:events:519:35)
+[0]     at TCP.<anonymous> (node:net:351:12)
+[0] ❌ Unhandled Rejection at: Promise {
+[0]   <rejected> Error: Connection is closed.
+[0]       at close (/Users/paul/development/ai-llm-rpa-system/node_modules/ioredis/built/redis/event_handler.js:189:25)
+[0]       at Socket.<anonymous> (/Users/paul/development/ai-llm-rpa-system/node_modules/ioredis/built/redis/event_handler.js:156:20)
+[0]       at Object.onceWrapper (node:events:622:26)
+[0]       at Socket.emit (node:events:519:35)
+[0]       at TCP.<anonymous> (node:net:351:12)
+[0] } reason: Error: Connection is closed.
+[0]     at close (/Users/paul/development/ai-llm-rpa-system/node_modules/ioredis/built/redis/event_handler.js:189:25)
+[0]     at Socket.<anonymous> (/Users/paul/development/ai-llm-rpa-system/node_modules/ioredis/built/redis/event_handler.js:156:20)
+[0]     at Object.onceWrapper (node:events:622:26)
+[0]     at Socket.emit (node:events:519:35)
+[0]     at TCP.<anonymous> (node:net:351:12)
+[0] Already shutting down, ignoring unhandledRejection
+[0] ❌ Unhandled Rejection at: Promise {
+[0]   <rejected> Error: Connection is closed.
+[0]       at close (/Users/paul/development/ai-llm-rpa-system/node_modules/ioredis/built/redis/event_handler.js:189:25)
+[0]       at Socket.<anonymous> (/Users/paul/development/ai-llm-rpa-system/node_modules/ioredis/built/redis/event_handler.js:156:20)
+[0]       at Object.onceWrapper (node:events:622:26)
+[0]       at Socket.emit (node:events:519:35)
+[0]       at TCP.<anonymous> (node:net:351:12)
+[0] } reason: Error: Connection is closed.
+[0]     at close (/Users/paul/development/ai-llm-rpa-system/node_modules/ioredis/built/redis/event_handler.js:189:25)
+[0]     at Socket.<anonymous> (/Users/paul/development/ai-llm-rpa-system/node_modules/ioredis/built/redis/event_handler.js:156:20)
+[0]     at Object.onceWrapper (node:events:622:26)
+[0]     at Socket.emit (node:events:519:35)
+[0]     at TCP.<anonymous> (node:net:351:12)
+[0] Already shutting down, ignoring unhandledRejection
+[0] ❌ Unhandled Rejection at: Promise {
+[0]   <rejected> Error: Connection is closed.
+[0]       at close (/Users/paul/development/ai-llm-rpa-system/node_modules/ioredis/built/redis/event_handler.js:189:25)
+[0]       at Socket.<anonymous> (/Users/paul/development/ai-llm-rpa-system/node_modules/ioredis/built/redis/event_handler.js:156:20)
+[0]       at Object.onceWrapper (node:events:622:26)
+[0]       at Socket.emit (node:events:519:35)
+[0]       at TCP.<anonymous> (node:net:351:12)
+[0] } reason: Error: Connection is closed.
+[0]     at close (/Users/paul/development/ai-llm-rpa-system/node_modules/ioredis/built/redis/event_handler.js:189:25)
+[0]     at Socket.<anonymous> (/Users/paul/development/ai-llm-rpa-system/node_modules/ioredis/built/redis/event_handler.js:156:20)
+[0]     at Object.onceWrapper (node:events:622:26)
+[0]     at Socket.emit (node:events:519:35)
+[0]     at TCP.<anonymous> (node:net:351:12)
+[0] Already shutting down, ignoring unhandledRejection
+[0] Error: Connection is closed.
+[0]     at close (/Users/paul/development/ai-llm-rpa-system/node_modules/ioredis/built/redis/event_handler.js:189:25)
+[0]     at Socket.<anonymous> (/Users/paul/development/ai-llm-rpa-system/node_modules/ioredis/built/redis/event_handler.js:156:20)
+[0]     at Object.onceWrapper (node:events:622:26)
+[0]     at Socket.emit (node:events:519:35)
+[0]     at TCP.<anonymous> (node:net:351:12)
+[0] ❌ Unhandled Rejection at: Promise {
+[0]   <rejected> Error: Connection is closed.
+[0]       at close (/Users/paul/development/ai-llm-rpa-system/node_modules/ioredis/built/redis/event_handler.js:189:25)
+[0]       at Socket.<anonymous> (/Users/paul/development/ai-llm-rpa-system/node_modules/ioredis/built/redis/event_handler.js:156:20)
+[0]       at Object.onceWrapper (node:events:622:26)
+[0]       at Socket.emit (node:events:519:35)
+[0]       at TCP.<anonymous> (node:net:351:12)
+[0] } reason: Error: Connection is closed.
+[0]     at close (/Users/paul/development/ai-llm-rpa-system/node_modules/ioredis/built/redis/event_handler.js:189:25)
+[0]     at Socket.<anonymous> (/Users/paul/development/ai-llm-rpa-system/node_modules/ioredis/built/redis/event_handler.js:156:20)
+[0]     at Object.onceWrapper (node:events:622:26)
+[0]     at Socket.emit (node:events:519:35)
+[0]     at TCP.<anonymous> (node:net:351:12)
+[0] Already shutting down, ignoring unhandledRejection
+[0] Error: Connection is closed.
+[0]     at close (/Users/paul/development/ai-llm-rpa-system/node_modules/ioredis/built/redis/event_handler.js:189:25)
+[0]     at Socket.<anonymous> (/Users/paul/development/ai-llm-rpa-system/node_modules/ioredis/built/redis/event_handler.js:156:20)
+[0]     at Object.onceWrapper (node:events:622:26)
+[0]     at Socket.emit (node:events:519:35)
+[0]     at TCP.<anonymous> (node:net:351:12)
+[0] ❌ Unhandled Rejection at: Promise {
+[0]   <rejected> Error: Connection is closed.
+[0]       at close (/Users/paul/development/ai-llm-rpa-system/node_modules/ioredis/built/redis/event_handler.js:189:25)
+[0]       at Socket.<anonymous> (/Users/paul/development/ai-llm-rpa-system/node_modules/ioredis/built/redis/event_handler.js:156:20)
+[0]       at Object.onceWrapper (node:events:622:26)
+[0]       at Socket.emit (node:events:519:35)
+[0]       at TCP.<anonymous> (node:net:351:12)
+[0] } reason: Error: Connection is closed.
+[0]     at close (/Users/paul/development/ai-llm-rpa-system/node_modules/ioredis/built/redis/event_handler.js:189:25)
+[0]     at Socket.<anonymous> (/Users/paul/development/ai-llm-rpa-system/node_modules/ioredis/built/redis/event_handler.js:156:20)
+[0]     at Object.onceWrapper (node:events:622:26)
+[0]     at Socket.emit (node:events:519:35)
+[0]     at TCP.<anonymous> (node:net:351:12)
+[0] Already shutting down, ignoring unhandledRejection
+[0] ❌ Unhandled Rejection at: Promise {
+[0]   <rejected> Error: Connection is closed.
+[0]       at close (/Users/paul/development/ai-llm-rpa-system/node_modules/ioredis/built/redis/event_handler.js:189:25)
+[0]       at Socket.<anonymous> (/Users/paul/development/ai-llm-rpa-system/node_modules/ioredis/built/redis/event_handler.js:156:20)
+[0]       at Object.onceWrapper (node:events:622:26)
+[0]       at Socket.emit (node:events:519:35)
+[0]       at TCP.<anonymous> (node:net:351:12)
+[0] } reason: Error: Connection is closed.
+[0]     at close (/Users/paul/development/ai-llm-rpa-system/node_modules/ioredis/built/redis/event_handler.js:189:25)
+[0]     at Socket.<anonymous> (/Users/paul/development/ai-llm-rpa-system/node_modules/ioredis/built/redis/event_handler.js:156:20)
+[0]     at Object.onceWrapper (node:events:622:26)
+[0]     at Socket.emit (node:events:519:35)
+[0]     at TCP.<anonymous> (node:net:351:12)
+[0] Error: Connection is closed.
+[0]     at close (/Users/paul/development/ai-llm-rpa-system/node_modules/ioredis/built/redis/event_handler.js:189:25)
+[0]     at Socket.<anonymous> (/Users/paul/development/ai-llm-rpa-system/node_modules/ioredis/built/redis/event_handler.js:156:20)
+[0]     at Object.onceWrapper (node:events:622:26)
+[0]     at Socket.emit (node:events:519:35)
+[0]     at TCP.<anonymous> (node:net:351:12)
+[0] ❌ Unhandled Rejection at: Promise {
+[0]   <rejected> Error: Connection is closed.
+[0]       at close (/Users/paul/development/ai-llm-rpa-system/node_modules/ioredis/built/redis/event_handler.js:189:25)
+[0]       at Socket.<anonymous> (/Users/paul/development/ai-llm-rpa-system/node_modules/ioredis/built/redis/event_handler.js:156:20)
+[0]       at Object.onceWrapper (node:events:622:26)
+[0]       at Socket.emit (node:events:519:35)
+[0]       at TCP.<anonymous> (node:net:351:12)
+[0] } reason: Error: Connection is closed.
+[0]     at close (/Users/paul/development/ai-llm-rpa-system/node_modules/ioredis/built/redis/event_handler.js:189:25)
+[0]     at Socket.<anonymous> (/Users/paul/development/ai-llm-rpa-system/node_modules/ioredis/built/redis/event_handler.js:156:20)
+[0]     at Object.onceWrapper (node:events:622:26)
+[0]     at Socket.emit (node:events:519:35)
+[0]     at TCP.<anonymous> (node:net:351:12)
+[0] Already shutting down, ignoring unhandledRejection
+[0] Already shutting down, ignoring unhandledRejection
+[0] Error: Connection is closed.
+[0]     at close (/Users/paul/development/ai-llm-rpa-system/node_modules/ioredis/built/redis/event_handler.js:189:25)
+[0]     at Socket.<anonymous> (/Users/paul/development/ai-llm-rpa-system/node_modules/ioredis/built/redis/event_handler.js:156:20)
+[0]     at Object.onceWrapper (node:events:622:26)
+[0]     at Socket.emit (node:events:519:35)
+[0]     at TCP.<anonymous> (node:net:351:12)
+[0] ❌ Unhandled Rejection at: Promise {
+[0]   <rejected> Error: Connection is closed.
+[0]       at close (/Users/paul/development/ai-llm-rpa-system/node_modules/ioredis/built/redis/event_handler.js:189:25)
+[0]       at Socket.<anonymous> (/Users/paul/development/ai-llm-rpa-system/node_modules/ioredis/built/redis/event_handler.js:156:20)
+[0]       at Object.onceWrapper (node:events:622:26)
+[0]       at Socket.emit (node:events:519:35)
+[0]       at TCP.<anonymous> (node:net:351:12)
+[0] } reason: Error: Connection is closed.
+[0]     at close (/Users/paul/development/ai-llm-rpa-system/node_modules/ioredis/built/redis/event_handler.js:189:25)
+[0]     at Socket.<anonymous> (/Users/paul/development/ai-llm-rpa-system/node_modules/ioredis/built/redis/event_handler.js:156:20)
+[0]     at Object.onceWrapper (node:events:622:26)
+[0]     at Socket.emit (node:events:519:35)
+[0]     at TCP.<anonymous> (node:net:351:12)
+[0] Already shutting down, ignoring unhandledRejection
+[0] ❌ Unhandled Rejection at: Promise {
+[0]   <rejected> Error: Connection is closed.
+[0]       at close (/Users/paul/development/ai-llm-rpa-system/node_modules/ioredis/built/redis/event_handler.js:189:25)
+[0]       at Socket.<anonymous> (/Users/paul/development/ai-llm-rpa-system/node_modules/ioredis/built/redis/event_handler.js:156:20)
+[0]       at Object.onceWrapper (node:events:622:26)
+[0]       at Socket.emit (node:events:519:35)
+[0]       at TCP.<anonymous> (node:net:351:12)
+[0] } reason: Error: Connection is closed.
+[0]     at close (/Users/paul/development/ai-llm-rpa-system/node_modules/ioredis/built/redis/event_handler.js:189:25)
+[0]     at Socket.<anonymous> (/Users/paul/development/ai-llm-rpa-system/node_modules/ioredis/built/redis/event_handler.js:156:20)
+[0]     at Object.onceWrapper (node:events:622:26)
+[0]     at Socket.emit (node:events:519:35)
+[0]     at TCP.<anonymous> (node:net:351:12)
+[0] Already shutting down, ignoring unhandledRejection
+[0] Closing queue workflow-execution
+[0] Closing queue email-sending
+[0] Closing queue webhook-processing
+[0] Closing queue file-processing
+[0] Closing queue llm-processing
+[0] ✅ Queue manager shut down successfully
+[0] 🔄 Shutting down database connections...
+[0] Database pool closed
+[0] 🔄 Shutting down HTTP server...
+[0] ✅ Graceful shutdown completed
+[0] npm run server:enhanced exited with code 0
+[1] npm run dev exited with code SIGTERM
