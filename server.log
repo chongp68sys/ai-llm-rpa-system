@@ -1,18 +1,20 @@
+[dotenv@17.2.2] injecting env (17) from .env -- tip: ⚙️  enable debug logging with { debug: true }
+🚀 Starting AI LLM RPA System...
 
-> ai-llm-rpa-system@0.0.1 server:enhanced
-> node src/backend/server-enhanced.js
+✅ Database module loaded
+✅ Queue module loaded
+✅ Auth module loaded
+✅ WebSocket module loaded
+✅ Config module loaded
+✅ Execution context loaded
 
-[dotenv@17.2.2] injecting env (17) from .env -- tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`
-🚀 Initializing AI LLM RPA System...
-⚠️ Configuration warnings: [
-  'SMTP_HOST is required when using SMTP provider',
-  'SMTP_USER is required when using SMTP provider',
-  'SMTP_PASS is required when using SMTP provider',
-  'TWILIO_ACCOUNT_SID is required when using Twilio provider',
-  'TWILIO_AUTH_TOKEN is required when using Twilio provider',
-  'TWILIO_FROM_PHONE is required when using Twilio provider'
-]
+🔧 Initializing systems...
 📊 Initializing database...
+
+🌐 Server running on http://localhost:3005
+🏥 Health check: http://localhost:3005/api/health
+ℹ️  System info: http://localhost:3005/api/info
+
 💾 Database schema already initialized
 PostgreSQL database initialized successfully
 ✅ Database initialized
@@ -22,50 +24,14 @@ PostgreSQL database initialized successfully
 ✅ Queue system initialized
 🔌 Initializing WebSocket server...
 ✅ WebSocket server initialized
-🎉 All systems initialized successfully!
-🎉 AI LLM RPA System Started Successfully!
+🎉 All systems initialized!
 
-📊 Server Information:
-   🌐 HTTP Server: http://localhost:3001
-   🔌 WebSocket Server: ws://localhost:3001/ws
-   🏥 Health Check: http://localhost:3001/api/health
-
-🔐 Authentication:
-   📝 Register: POST http://localhost:3001/api/auth/register
-   🔑 Login: POST http://localhost:3001/api/auth/login
-
-⚙️ System Features:
-   ✅ PostgreSQL Database with Connection Pool
-   ✅ Redis Queue System (BullMQ)
+🎯 Production Features Active:
+   ✅ PostgreSQL Database
+   ✅ Redis Queue System
    ✅ JWT Authentication
-   ✅ Real-time WebSocket Updates
-   ✅ Rate Limiting & Security Headers
-   ✅ Graceful Shutdown Handling
+   ✅ WebSocket Real-time
+   ✅ Rate Limiting
+   ✅ Security Headers
 
-🚀 Ready to process workflows!
-🔄 Received SIGTERM, starting graceful shutdown...
-🔄 Shutting down WebSocket server...
-🔄 Shutting down WebSocket server...
-✅ WebSocket server closed
-🔄 Shutting down queue manager...
-🔄 Shutting down queue manager...
-Closing worker for workflow-execution
-Closing worker for email-sending
-Closing worker for webhook-processing
-Closing worker for file-processing
-Closing worker for llm-processing
-Closing queue events for workflow-execution
-Closing queue events for email-sending
-Closing queue events for webhook-processing
-Closing queue events for file-processing
-Closing queue events for llm-processing
-Closing queue workflow-execution
-Closing queue email-sending
-Closing queue webhook-processing
-Closing queue file-processing
-Closing queue llm-processing
-✅ Queue manager shut down successfully
-🔄 Shutting down database connections...
-Database pool closed
-🔄 Shutting down HTTP server...
-✅ Graceful shutdown completed
+🚀 Ready for production workloads!
