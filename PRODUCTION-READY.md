@@ -1,5 +1,24 @@
 # 🚀 AI/LLM RPA System - PRODUCTION READY!
 
+## ⚡ Quick Start (30 seconds)
+
+```bash
+# 1. Deploy everything
+./deploy-production.sh
+
+# 2. Start the backend (in another terminal)
+npm run server:enhanced
+
+# 3. Start the frontend (in another terminal) 
+npm run dev
+
+# 4. Open browser to http://localhost:5173
+```
+
+**That's it!** Your production-ready AI workflow automation platform is running.
+
+---
+
 ## 🎉 **Mission Accomplished - 100% Production Ready**
 
 Your AI/LLM RPA system has been successfully transformed from **~70% complete** to **100% production ready** with all critical infrastructure implemented and tested.
