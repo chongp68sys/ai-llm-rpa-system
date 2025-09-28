@@ -1,0 +1,37 @@
+
+> ai-llm-rpa-system@0.0.1 start:production
+> node start-production.js
+
+[dotenv@17.2.2] injecting env (17) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+🚀 Starting AI LLM RPA System...
+
+✅ Database module loaded
+✅ Queue module loaded
+✅ Auth module loaded
+✅ WebSocket module loaded
+✅ Config module loaded
+✅ Execution context loaded
+
+🔧 Initializing systems...
+📊 Initializing database...
+node:events:485
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use :::3001
+    at Server.setupListenHandle [as _listen2] (node:net:1939:16)
+    at listenInCluster (node:net:1996:12)
+    at Server.listen (node:net:2101:7)
+    at startServer (file:///Users/paul/development/ai-llm-rpa-system/start-production.js:492:12)
+    at file:///Users/paul/development/ai-llm-rpa-system/start-production.js:516:1
+Emitted 'error' event on Server instance at:
+    at emitErrorNT (node:net:1975:8)
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+  code: 'EADDRINUSE',
+  errno: -48,
+  syscall: 'listen',
+  address: '::',
+  port: 3001
+}
+
+Node.js v23.11.0
