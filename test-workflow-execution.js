@@ -16,7 +16,7 @@ async function testWorkflowExecution() {
     
     // Test health endpoint
     console.log('2️⃣ Testing health endpoint...');
-    const healthResponse = await axios.get('http://localhost:3001/health');
+    const healthResponse = await axios.get('http://localhost:3001/api/health');
     console.log('✅ Health check:', healthResponse.data);
     
     // Register a user
