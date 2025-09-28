@@ -1,0 +1,33 @@
+{
+  "name": "Test Workflow - Basic Logging",
+  "description": "Simple test workflow to verify queue system",
+  "nodes_data": [
+    {
+      "id": "1",
+      "type": "trigger",
+      "position": { "x": 100, "y": 100 },
+      "data": {
+        "label": "Manual Trigger",
+        "triggerType": "manual"
+      }
+    },
+    {
+      "id": "2", 
+      "type": "log",
+      "position": { "x": 300, "y": 100 },
+      "data": {
+        "label": "Log Test",
+        "message": "Hello from AI LLM RPA System!",
+        "level": "info"
+      }
+    }
+  ],
+  "edges_data": [
+    {
+      "id": "e1-2",
+      "source": "1",
+      "target": "2",
+      "type": "default"
+    }
+  ]
+}
