@@ -39,3 +39,6 @@ PostgreSQL database initialized successfully
 ✅ WebSocket authenticated: user123 (client_1759033575781_c2nrt58cpyk)
 📨 Message from user123: ping
 🔌 Client disconnected: user123 (client_1759033575781_c2nrt58cpyk)
+🚀 Processing workflow execution job: 14
+✅ Workflow execution test-execution-id completed successfully
+✅ Job 14 in queue workflow-execution completed
