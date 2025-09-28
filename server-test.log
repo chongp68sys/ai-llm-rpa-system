@@ -1,4 +1,8 @@
-[dotenv@17.2.2] injecting env (17) from .env -- tip: 📡 version env with Radar: https://dotenvx.com/radar
+
+> ai-llm-rpa-system@0.0.1 start:production
+> node start-production.js
+
+[dotenv@17.2.2] injecting env (17) from .env -- tip: ⚙️  enable debug logging with { debug: true }
 🚀 Starting AI LLM RPA System...
 
 ✅ Database module loaded
@@ -10,24 +14,59 @@
 
 🔧 Initializing systems...
 📊 Initializing database...
-node:events:485
-      throw er; // Unhandled 'error' event
-      ^
 
-Error: listen EADDRINUSE: address already in use :::3001
-    at Server.setupListenHandle [as _listen2] (node:net:1939:16)
-    at listenInCluster (node:net:1996:12)
-    at Server.listen (node:net:2101:7)
-    at startServer (file:///Users/paul/development/ai-llm-rpa-system/start-production.js:275:12)
-    at file:///Users/paul/development/ai-llm-rpa-system/start-production.js:299:1
-Emitted 'error' event on Server instance at:
-    at emitErrorNT (node:net:1975:8)
-    at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
-  code: 'EADDRINUSE',
-  errno: -48,
-  syscall: 'listen',
-  address: '::',
-  port: 3001
-}
+🌐 Server running on http://localhost:3005
+🏥 Health check: http://localhost:3005/api/health
+ℹ️  System info: http://localhost:3005/api/info
 
-Node.js v23.11.0
+💾 Database schema already initialized
+PostgreSQL database initialized successfully
+✅ Database initialized
+🚀 Initializing queue system...
+✅ All queue workers created successfully
+✅ Queue manager initialized successfully
+✅ Queue system initialized
+🔌 Initializing WebSocket server...
+✅ WebSocket server initialized
+🎉 All systems initialized!
+
+🎯 Production Features Active:
+   ✅ PostgreSQL Database
+   ✅ Redis Queue System
+   ✅ JWT Authentication
+   ✅ WebSocket Real-time
+   ✅ Rate Limiting
+   ✅ Security Headers
+
+🚀 Ready for production workloads!
+🔌 New WebSocket connection attempt
+✅ WebSocket authenticated: user1759037292 (client_1759037325489_72ksblkrkmn)
+📨 Message from user1759037292: ping
+🔌 Client disconnected: user1759037292 (client_1759037325489_72ksblkrkmn)
+
+🔄 Received SIGTERM, shutting down gracefully...
+🔄 Shutting down WebSocket server...
+✅ WebSocket server closed
+✅ WebSocket server closed
+🔄 Shutting down queue manager...
+Closing worker for workflow-execution
+Closing worker for email-sending
+Closing worker for webhook-processing
+Closing worker for file-processing
+Closing worker for llm-processing
+Closing queue events for workflow-execution
+Closing queue events for email-sending
+Closing queue events for webhook-processing
+Closing queue events for file-processing
+Closing queue events for llm-processing
+Closing queue workflow-execution
+Closing queue email-sending
+Closing queue webhook-processing
+Closing queue file-processing
+Closing queue llm-processing
+✅ Queue manager shut down successfully
+✅ Queue manager closed
+Database pool closed
+✅ Database closed
+✅ HTTP server closed
+👋 Goodbye!
