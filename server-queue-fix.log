@@ -1,0 +1,62 @@
+[dotenv@17.2.2] injecting env (17) from .env -- tip: 📡 observe env with Radar: https://dotenvx.com/radar
+🚀 Starting AI LLM RPA System...
+
+✅ Database module loaded
+✅ Queue module loaded
+✅ Auth module loaded
+✅ WebSocket module loaded
+✅ Config module loaded
+✅ Execution context loaded
+
+🔧 Initializing systems...
+📊 Initializing database...
+
+🌐 Server running on http://localhost:3001
+🏥 Health check: http://localhost:3001/api/health
+ℹ️  System info: http://localhost:3001/api/info
+
+💾 Database schema already initialized
+PostgreSQL database initialized successfully
+✅ Database initialized
+🚀 Initializing queue system...
+✅ All queue workers created successfully
+✅ Queue manager initialized successfully
+✅ Queue system initialized
+🔌 Initializing WebSocket server...
+✅ WebSocket server initialized
+🎉 All systems initialized!
+
+🎯 Production Features Active:
+   ✅ PostgreSQL Database
+   ✅ Redis Queue System
+   ✅ JWT Authentication
+   ✅ WebSocket Real-time
+   ✅ Rate Limiting
+   ✅ Security Headers
+
+🚀 Ready for production workloads!
+🚀 Processing workflow execution job: 13
+✅ Workflow execution 5b204374-47e0-4b04-8e2c-43ec0f43d613 completed successfully
+✅ Job 13 in queue workflow-execution completed
+Error fetching execution: error: column "timestamp" does not exist
+    at /Users/paul/development/ai-llm-rpa-system/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async file:///Users/paul/development/ai-llm-rpa-system/start-production.js:426:24 {
+  length: 109,
+  severity: 'ERROR',
+  code: '42703',
+  detail: undefined,
+  hint: undefined,
+  position: '63',
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: undefined,
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'parse_relation.c',
+  line: '3657',
+  routine: 'errorMissingColumn'
+}

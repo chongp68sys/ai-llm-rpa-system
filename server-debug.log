@@ -1,0 +1,38 @@
+[dotenv@17.2.2] injecting env (17) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+🚀 Starting AI LLM RPA System...
+
+✅ Database module loaded
+✅ Queue module loaded
+✅ Auth module loaded
+✅ WebSocket module loaded
+✅ Config module loaded
+✅ Execution context loaded
+
+🔧 Initializing systems...
+📊 Initializing database...
+
+🌐 Server running on http://localhost:3001
+🏥 Health check: http://localhost:3001/api/health
+ℹ️  System info: http://localhost:3001/api/info
+
+💾 Database schema already initialized
+PostgreSQL database initialized successfully
+✅ Database initialized
+🚀 Initializing queue system...
+✅ All queue workers created successfully
+✅ Queue manager initialized successfully
+✅ Queue system initialized
+🔌 Initializing WebSocket server...
+✅ WebSocket server initialized
+🎉 All systems initialized!
+
+🎯 Production Features Active:
+   ✅ PostgreSQL Database
+   ✅ Redis Queue System
+   ✅ JWT Authentication
+   ✅ WebSocket Real-time
+   ✅ Rate Limiting
+   ✅ Security Headers
+
+🚀 Ready for production workloads!
+Verified user: Promise { <pending> }

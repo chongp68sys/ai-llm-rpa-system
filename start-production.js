@@ -221,6 +221,223 @@ app.post('/api/auth/login', async (req, res) => {
   }
 });
 
+// Middleware to check if systems are initialized
+function requireInitialized(req, res, next) {
+  if (!systemsInitialized) {
+    return res.status(503).json({ error: 'System still initializing' });
+  }
+  next();
+}
+
+// Middleware to authenticate JWT tokens
+async function authenticateToken(req, res, next) {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+
+  if (!token) {
+    return res.status(401).json({ error: 'Access token required' });
+  }
+
+  try {
+    const user = await authService.verifyToken(token);
+    req.user = user;
+    next();
+  } catch (error) {
+    console.log('Token verification error:', error.message);
+    return res.status(403).json({ error: 'Invalid token' });
+  }
+}
+
+// Workflow API Routes
+app.get('/api/workflows', requireInitialized, authenticateToken, async (req, res) => {
+  try {
+    const result = await dbManager.pool.query(
+      'SELECT id, name, description, nodes_data, edges_data, status, created_at, updated_at FROM workflows WHERE created_by = $1 ORDER BY updated_at DESC',
+      [req.user.userId]
+    );
+    // Transform to expected format
+    const workflows = result.rows.map(row => ({
+      ...row,
+      workflow_data: {
+        nodes: row.nodes_data || [],
+        edges: row.edges_data || []
+      }
+    }));
+    res.json(workflows);
+  } catch (error) {
+    console.error('Error fetching workflows:', error);
+    res.status(500).json({ error: 'Failed to fetch workflows' });
+  }
+});
+
+app.get('/api/workflows/:id', requireInitialized, authenticateToken, async (req, res) => {
+  try {
+    const result = await dbManager.pool.query(
+      'SELECT * FROM workflows WHERE id = $1 AND created_by = $2',
+      [req.params.id, req.user.userId]
+    );
+    
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Workflow not found' });
+    }
+    
+    const workflow = result.rows[0];
+    res.json({
+      ...workflow,
+      workflow_data: {
+        nodes: workflow.nodes_data || [],
+        edges: workflow.edges_data || []
+      }
+    });
+  } catch (error) {
+    console.error('Error fetching workflow:', error);
+    res.status(500).json({ error: 'Failed to fetch workflow' });
+  }
+});
+
+app.post('/api/workflows', requireInitialized, authenticateToken, async (req, res) => {
+  const { name, description, workflow_data } = req.body;
+  
+  try {
+    const nodes = workflow_data?.nodes || [];
+    const edges = workflow_data?.edges || [];
+    
+    const result = await dbManager.pool.query(
+      'INSERT INTO workflows (id, name, description, nodes_data, edges_data, created_by, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP) RETURNING *',
+      [randomUUID(), name, description, JSON.stringify(nodes), JSON.stringify(edges), req.user.userId]
+    );
+    
+    const workflow = result.rows[0];
+    res.status(201).json({
+      ...workflow,
+      workflow_data: {
+        nodes: workflow.nodes_data || [],
+        edges: workflow.edges_data || []
+      }
+    });
+  } catch (error) {
+    console.error('Error creating workflow:', error);
+    res.status(500).json({ error: 'Failed to create workflow' });
+  }
+});
+
+app.put('/api/workflows/:id', requireInitialized, authenticateToken, async (req, res) => {
+  const { name, description, workflow_data } = req.body;
+  
+  try {
+    const nodes = workflow_data?.nodes || [];
+    const edges = workflow_data?.edges || [];
+    
+    const result = await dbManager.pool.query(
+      'UPDATE workflows SET name = $1, description = $2, nodes_data = $3, edges_data = $4, updated_at = CURRENT_TIMESTAMP WHERE id = $5 AND created_by = $6 RETURNING *',
+      [name, description, JSON.stringify(nodes), JSON.stringify(edges), req.params.id, req.user.userId]
+    );
+    
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Workflow not found' });
+    }
+    
+    const workflow = result.rows[0];
+    res.json({
+      ...workflow,
+      workflow_data: {
+        nodes: workflow.nodes_data || [],
+        edges: workflow.edges_data || []
+      }
+    });
+  } catch (error) {
+    console.error('Error updating workflow:', error);
+    res.status(500).json({ error: 'Failed to update workflow' });
+  }
+});
+
+app.post('/api/workflows/:id/execute', requireInitialized, authenticateToken, async (req, res) => {
+  try {
+    // Verify workflow ownership
+    const workflowResult = await dbManager.pool.query(
+      'SELECT * FROM workflows WHERE id = $1 AND created_by = $2',
+      [req.params.id, req.user.userId]
+    );
+    
+    if (workflowResult.rows.length === 0) {
+      return res.status(404).json({ error: 'Workflow not found' });
+    }
+    
+    const workflow = workflowResult.rows[0];
+    const executionId = randomUUID();
+    
+    // Create execution record
+    await dbManager.pool.query(
+      'INSERT INTO workflow_executions (id, workflow_id, status, started_at) VALUES ($1, $2, $3, CURRENT_TIMESTAMP)',
+      [executionId, req.params.id, 'queued']
+    );
+    
+    // Queue the workflow for execution
+    await queueManager.addWorkflowExecution(
+      req.params.id, 
+      executionId, 
+      {
+        userId: req.user.userId,
+        workflowData: {
+          nodes: workflow.nodes_data || [],
+          edges: workflow.edges_data || []
+        },
+        ...req.body.context || {}
+      }
+    );
+    
+    res.json({ 
+      success: true, 
+      executionId,
+      status: 'queued',
+      message: 'Workflow execution queued successfully' 
+    });
+  } catch (error) {
+    console.error('Error executing workflow:', error);
+    res.status(500).json({ error: 'Failed to execute workflow' });
+  }
+});
+
+app.get('/api/workflows/:id/executions', requireInitialized, authenticateToken, async (req, res) => {
+  try {
+    const result = await dbManager.pool.query(
+      'SELECT we.* FROM workflow_executions we JOIN workflows w ON we.workflow_id = w.id WHERE w.id = $1 AND w.created_by = $2 ORDER BY we.started_at DESC',
+      [req.params.id, req.user.userId]
+    );
+    res.json(result.rows);
+  } catch (error) {
+    console.error('Error fetching executions:', error);
+    res.status(500).json({ error: 'Failed to fetch executions' });
+  }
+});
+
+app.get('/api/workflows/:id/executions/:executionId', requireInitialized, authenticateToken, async (req, res) => {
+  try {
+    const result = await dbManager.pool.query(
+      'SELECT we.* FROM workflow_executions we JOIN workflows w ON we.workflow_id = w.id WHERE we.id = $1 AND w.created_by = $2',
+      [req.params.executionId, req.user.userId]
+    );
+    
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Execution not found' });
+    }
+    
+    // Also get execution logs
+    const logsResult = await dbManager.pool.query(
+      'SELECT * FROM execution_logs WHERE execution_id = $1 ORDER BY created_at',
+      [req.params.executionId]
+    );
+    
+    res.json({
+      ...result.rows[0],
+      logs: logsResult.rows
+    });
+  } catch (error) {
+    console.error('Error fetching execution:', error);
+    res.status(500).json({ error: 'Failed to fetch execution' });
+  }
+});
+
 // Global error handler
 app.use((err, req, res, next) => {
   console.error('Global error:', err);
