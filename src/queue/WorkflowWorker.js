@@ -77,7 +77,7 @@ export const nodeWorker = new Worker('node-execution', async (job) => {
   try {
     // Log node execution start
     const nodeExecutionId = await pool.query(
-      'INSERT INTO node_executions (workflow_execution_id, node_id, node_type, status, input_data, started_at) VALUES ($1, $2, $3, $4, $5, CURRENT_TIMESTAMP) RETURNING id',
+      'INSERT INTO node_executions (execution_id, node_id, node_type, status, input_data, started_at) VALUES ($1, $2, $3, $4, $5, CURRENT_TIMESTAMP) RETURNING id',
       [executionId, nodeId, nodeType, 'running', JSON.stringify(nodeData)]
     );
 

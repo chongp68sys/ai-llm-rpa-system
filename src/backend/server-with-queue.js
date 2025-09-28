@@ -131,7 +131,7 @@ app.get('/api/workflows/:id/executions/:executionId', async (req, res) => {
     
     // Get node executions for this workflow execution
     const nodeExecutions = await pool.query(
-      'SELECT * FROM node_executions WHERE workflow_execution_id = $1 ORDER BY started_at',
+      'SELECT * FROM node_executions WHERE execution_id = $1 ORDER BY started_at',
       [executionId]
     );
     
