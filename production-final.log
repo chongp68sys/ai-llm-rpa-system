@@ -1,0 +1,64 @@
+[dotenv@17.2.2] injecting env (17) from .env -- tip: ⚙️  write to custom object with { processEnv: myObject }
+🚀 Starting AI LLM RPA System...
+
+✅ Database module loaded
+✅ Queue module loaded
+✅ Auth module loaded
+✅ WebSocket module loaded
+✅ Config module loaded
+✅ Execution context loaded
+
+🔧 Initializing systems...
+📊 Initializing database...
+
+🌐 Server running on http://localhost:3005
+🏥 Health check: http://localhost:3005/api/health
+ℹ️  System info: http://localhost:3005/api/info
+
+💾 Database schema already initialized
+PostgreSQL database initialized successfully
+✅ Database initialized
+🚀 Initializing queue system...
+✅ All queue workers created successfully
+✅ Queue manager initialized successfully
+✅ Queue system initialized
+🔌 Initializing WebSocket server...
+✅ WebSocket server initialized
+🎉 All systems initialized!
+
+🎯 Production Features Active:
+   ✅ PostgreSQL Database
+   ✅ Redis Queue System
+   ✅ JWT Authentication
+   ✅ WebSocket Real-time
+   ✅ Rate Limiting
+   ✅ Security Headers
+
+🚀 Ready for production workloads!
+
+🔄 Received SIGTERM, shutting down gracefully...
+🔄 Shutting down WebSocket server...
+✅ WebSocket server closed
+✅ WebSocket server closed
+🔄 Shutting down queue manager...
+Closing worker for workflow-execution
+Closing worker for email-sending
+Closing worker for webhook-processing
+Closing worker for file-processing
+Closing worker for llm-processing
+Closing queue events for workflow-execution
+Closing queue events for email-sending
+Closing queue events for webhook-processing
+Closing queue events for file-processing
+Closing queue events for llm-processing
+Closing queue workflow-execution
+Closing queue email-sending
+Closing queue webhook-processing
+Closing queue file-processing
+Closing queue llm-processing
+✅ Queue manager shut down successfully
+✅ Queue manager closed
+Database pool closed
+✅ Database closed
+✅ HTTP server closed
+👋 Goodbye!
