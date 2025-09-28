@@ -49,7 +49,7 @@ async function testProductionSystem() {
     console.log('✅ Token verification successful:', verifiedUser.username);
     
     console.log('\n4️⃣ Testing Queue System...');
-    const queueStatus = await queueManager.getStatus();
+    const queueStatus = await queueManager.healthCheck();
     console.log('✅ Queue system status:', queueStatus.status);
     
     console.log('\n5️⃣ Testing Database Operations...');
@@ -73,8 +73,8 @@ async function testProductionSystem() {
     };
     
     await dbManager.query(
-      'INSERT INTO workflows (id, name, description, definition, created_by, is_active) VALUES ($1, $2, $3, $4, $5, $6)',
-      [testWorkflow.id, testWorkflow.name, testWorkflow.description, JSON.stringify(testWorkflow), testWorkflow.created_by, testWorkflow.is_active]
+      'INSERT INTO workflows (id, name, description, nodes_data, edges_data, created_by) VALUES ($1, $2, $3, $4, $5, $6)',
+      [testWorkflow.id, testWorkflow.name, testWorkflow.description, JSON.stringify(testWorkflow.nodes || []), JSON.stringify(testWorkflow.edges || []), testWorkflow.created_by]
     );
     console.log('✅ Workflow created successfully');
     
@@ -95,13 +95,13 @@ async function testProductionSystem() {
       executionId: crypto.randomUUID()
     };
     
-    const job = await queueManager.addJob('node-execution', nodeJob);
+    const job = await queueManager.addWorkflowExecution(savedWorkflow.id, nodeJob.executionId, { testData: 'test' });
     console.log('✅ Node execution job queued:', job.id);
     
     // Wait a moment for processing
     await new Promise(resolve => setTimeout(resolve, 2000));
     
-    const finalQueueStatus = await queueManager.getStatus();
+    const finalQueueStatus = await queueManager.healthCheck();
     console.log('✅ Final queue status:', finalQueueStatus.status);
     
     console.log('\n🎉 ALL PRODUCTION TESTS PASSED! 🎉');

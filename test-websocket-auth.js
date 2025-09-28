@@ -3,7 +3,7 @@ import WebSocket from 'ws';
 console.log('🔌 Testing Authenticated WebSocket Connection...');
 
 // Get JWT token first
-const loginResponse = await fetch('http://localhost:3001/api/auth/login', {
+const loginResponse = await fetch('http://localhost:3005/api/auth/login', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({ username: 'user123', password: 'password123' })
@@ -20,7 +20,7 @@ const token = loginData.token;
 console.log('✅ Got authentication token');
 
 // Connect to WebSocket with token
-const ws = new WebSocket(`ws://localhost:3001/ws?token=${token}`);
+const ws = new WebSocket(`ws://localhost:3005/ws?token=${token}`);
 
 ws.on('open', function open() {
   console.log('✅ Authenticated WebSocket connected successfully!');
