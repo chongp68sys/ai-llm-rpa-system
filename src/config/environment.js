@@ -89,7 +89,7 @@ export const config = {
 
   general: {
     nodeEnv: (process.env.NODE_ENV) || 'development',
-    port: parseEnvNumber(process.env.PORT, 3001),
+    port: parseEnvNumber(process.env.PORT, 3005),
     logLevel: (process.env.LOG_LEVEL) || 'info'
   },
 
